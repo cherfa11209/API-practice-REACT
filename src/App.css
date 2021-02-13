@@ -36,3 +36,21 @@
     transform: rotate(360deg);
   }
 }
+
+.card{
+  width: 20vw;
+  height: 20vh;
+  border: 2px solid black;
+  font-size: small;
+  margin: auto;
+}
+
+.character-records{
+  display: grid;
+  height: 70vh;
+  width: 90vw;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(4, 1fr);
+  margin: auto;
+  margin-top: 10%;
+}
