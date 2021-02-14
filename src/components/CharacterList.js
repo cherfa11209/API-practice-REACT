@@ -41,17 +41,20 @@ export default class CharacterLis extends Component {
         fetchCharacterData()
     }
 
-    flip = () => {
+    flipRight = () => {
         let i = 5;
         let url = 'https://swapi.py4e.com/api/people/'
         url = url + `${i}/`
-        this.state.characters.shift();
+        let flipped = []
+        let flip = this.state.characters.shift();
+        flipped.push(flip)
 
        const fetchNewCharacter = async () => {
            const response = await fetch(url)
            const NewCharacter = await response.json();
            i += 1;
            console.log(NewCharacter)
+           console.log('flipped:', flipped)
            return NewCharacter
        }
 
@@ -71,10 +74,15 @@ export default class CharacterLis extends Component {
                 loading...
                 </div> : 
                 <div>
-                    <button className="record"
-                            onClick={this.flip}
+                    <button className="record-left"
+                            onClick={this.flipLeft}
                     >
-                        flip through records
+                        <img className="left-arrow" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTWTSJEUQIoJafBK4YwpfgjYGw_cZZ5hcgsaQ&usqp=CAU" alt="left"></img>
+                    </button>
+                    <button className="record-right"
+                            onClick={this.flipRight}
+                    >
+                        <img className="right-arrow" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ7e-AtMj1Iw-3kPrr-fDVXCe6__nfEZ5v5oA&usqp=CAU" alt="right"></img>
                     </button>
                     <div className='character-records'>
                         {this.state.characters.map((character, i) => {

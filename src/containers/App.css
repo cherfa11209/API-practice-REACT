@@ -1,0 +1,93 @@
+.App {
+  text-align: center;
+}
+
+.card{
+  width: 20vw;
+  height: 20vh;
+  background-color: grey;
+  font-size: small;
+  margin: auto;
+  border: 3px solid black;
+}
+
+.character-records{
+  display: grid;
+  height: 70vh;
+  width: 90vw;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(4, 1fr);
+  margin: auto;
+  margin-top: 10%;
+}
+
+.footer{
+  position: absolute;
+  bottom: 0;
+  width: 100vw;
+  height: 5vh;
+  background-color: rgb(0, 0, 0);
+  border-top: 5px solid yellow;
+  border-bottom: 5px solid yellow;
+  display: flex;
+  justify-content: space-around;
+}
+
+img{
+  height: 3vh;
+}
+
+
+a{
+  margin-top: 1vh;
+  color: yellow;
+  text-decoration: none;
+}
+
+.Header{
+  background-color: black;
+  color: yellow;
+  position: absolute;
+  top: 0%;
+  width: 100%;
+  display: flex;
+  margin: auto;
+  justify-content: space-around;
+  height: 6vh;
+  border-bottom: 5px double yellow; 
+  border-top: 5px double yellow; 
+}
+
+.logo{
+  margin-top: 1%;
+}
+
+.expand{
+  margin-top: 1em;
+  background-color: grey;
+  border: none;
+  color: yellow;
+  text-decoration: underline;
+}
+
+.expand:hover{
+  cursor: pointer;
+}
+
+.record-left{
+  position: absolute;
+  bottom: 10vh;
+  left: 30%;
+  height: 5%;
+  width: 15%;
+  border: 5px double yellow;
+}
+
+.record-right{
+  position: absolute;
+  bottom: 10vh;
+  right: 30%;
+  height: 5%;
+  width: 15%;
+  border: 5px double yellow;
+}
