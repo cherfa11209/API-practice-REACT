@@ -8,6 +8,8 @@ export default class CharacterLis extends Component {
         this.state = {
             loading: true, 
             characters: null,
+            i: 5,
+            j: 0,
         };
     }
 
@@ -42,31 +44,55 @@ export default class CharacterLis extends Component {
     }
 
     flipRight = () => {
-        let i = 5;
         let url = 'https://swapi.py4e.com/api/people/'
-        url = url + `${i}/`
-        let flipped = []
-        let flip = this.state.characters.shift();
-        flipped.push(flip)
+        url = url + `${this.state.i}/`
+        let flip = this.state.characters.shift()
+        console.log(this.state.i)
+        console.log(flip)
 
        const fetchNewCharacter = async () => {
            const response = await fetch(url)
            const NewCharacter = await response.json();
-           i += 1;
-           console.log(NewCharacter)
-           console.log('flipped:', flipped)
-           return NewCharacter
+           this.setState({
+               loading: true,
+               characters: [...this.state.characters, NewCharacter],
+               i: this.state.i+1,
+               j: this.state.j+1,
+               loading: false,
+           })
        }
 
+       fetchNewCharacter()
 
-       this.setState({
-           loading: true,
-           characters: [...this.state.characters, fetchNewCharacter()],
-           loading: false,
-       })
-
-       console.log(this.state.characters)
+       console.log("These are the states characters", this.state.characters)
     }
+
+    flipLeft = () => {
+        let url = 'https://swapi.py4e.com/api/people/'
+        url = url + `${this.state.j}/`
+        let flip = this.state.characters.pop()
+        console.log(flip)
+
+       const fetchNewCharacter = async () => {
+           const response = await fetch(url)
+           const NewCharacter = await response.json();
+           console.log("j", this.state.j)
+           console.log(NewCharacter)
+           console.log("url:", url)
+           this.state.characters.unshift(NewCharacter)
+           this.setState({
+               loading: true,
+               i: this.state.i-1,
+               j: this.state.j-1,
+               loading: false,
+           })
+       }
+
+       fetchNewCharacter()
+
+       console.log("These are the states characters", this.state.characters)
+    }
+    
 
     render(){
         return(
@@ -79,11 +105,13 @@ export default class CharacterLis extends Component {
                     >
                         <img className="left-arrow" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTWTSJEUQIoJafBK4YwpfgjYGw_cZZ5hcgsaQ&usqp=CAU" alt="left"></img>
                     </button>
+
                     <button className="record-right"
                             onClick={this.flipRight}
                     >
                         <img className="right-arrow" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ7e-AtMj1Iw-3kPrr-fDVXCe6__nfEZ5v5oA&usqp=CAU" alt="right"></img>
                     </button>
+
                     <div className='character-records'>
                         {this.state.characters.map((character, i) => {
                         return <Character 
@@ -92,6 +120,7 @@ export default class CharacterLis extends Component {
                         birth_year={this.state.characters[i].birth_year}
                         gender={this.state.characters[i].gender}
                         id = {i}
+                        expand = {this.expand}
                         />
                     })}
                         

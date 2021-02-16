@@ -7,7 +7,7 @@ const Character = (props) => {
             <p>birth_year: {props.birth_year}</p>
             <p>Gender: {props.gender}</p>
             <p>height: {props.height}</p>
-            <button className="expand">Read More</button>
+            <button className="expand" onClick={props.expand} >Read More</button>
         </div>
     )
 }
