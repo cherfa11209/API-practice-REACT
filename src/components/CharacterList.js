@@ -10,6 +10,7 @@ export default class CharacterLis extends Component {
             characters: null,
             i: 5,
             j: 0,
+            expand: false,
         };
     }
 
@@ -46,13 +47,12 @@ export default class CharacterLis extends Component {
     flipRight = () => {
         let url = 'https://swapi.py4e.com/api/people/'
         url = url + `${this.state.i}/`
-        let flip = this.state.characters.shift()
-        console.log(this.state.i)
-        console.log(flip)
+        this.state.characters.shift()
 
        const fetchNewCharacter = async () => {
            const response = await fetch(url)
            const NewCharacter = await response.json();
+           console.log(NewCharacter)
            this.setState({
                loading: true,
                characters: [...this.state.characters, NewCharacter],
@@ -63,54 +63,66 @@ export default class CharacterLis extends Component {
        }
 
        fetchNewCharacter()
-
-       console.log("These are the states characters", this.state.characters)
     }
 
     flipLeft = () => {
-        let url = 'https://swapi.py4e.com/api/people/'
-        url = url + `${this.state.j}/`
-        let flip = this.state.characters.pop()
-        console.log(flip)
+        if(this.state.j > 0){
+            let url = 'https://swapi.py4e.com/api/people/'
+            url = url + `${this.state.j}/`
+            this.state.characters.pop()
+    
+           const fetchNewCharacter = async () => {
+               const response = await fetch(url)
+               const NewCharacter = await response.json();
+               this.state.characters.unshift(NewCharacter)
+    
+                this.setState({
+                    loading: true,
+                    i: this.state.i-1,
+                    j: this.state.j-1,
+                    loading: false,
+                })
+           }
+    
+           fetchNewCharacter()
+        } 
+        else{
+            console.log('this is the first available record!')
+        }
+    }
 
-       const fetchNewCharacter = async () => {
-           const response = await fetch(url)
-           const NewCharacter = await response.json();
-           console.log("j", this.state.j)
-           console.log(NewCharacter)
-           console.log("url:", url)
-           this.state.characters.unshift(NewCharacter)
-           this.setState({
-               loading: true,
-               i: this.state.i-1,
-               j: this.state.j-1,
-               loading: false,
-           })
-       }
-
-       fetchNewCharacter()
-
-       console.log("These are the states characters", this.state.characters)
+    expand = () => {
+        if(this.state.expand == false){
+            this.setState({
+                expand: true,
+            })
+        }
+        else{
+            this.setState({
+                expand: false,
+            })
+        }
     }
     
-
     render(){
         return(
             <div> {this.state.loading ? <div>
                 loading...
                 </div> : 
                 <div>
-                    <button className="record-left"
-                            onClick={this.flipLeft}
-                    >
-                        <img className="left-arrow" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTWTSJEUQIoJafBK4YwpfgjYGw_cZZ5hcgsaQ&usqp=CAU" alt="left"></img>
-                    </button>
-
-                    <button className="record-right"
-                            onClick={this.flipRight}
-                    >
-                        <img className="right-arrow" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ7e-AtMj1Iw-3kPrr-fDVXCe6__nfEZ5v5oA&usqp=CAU" alt="right"></img>
-                    </button>
+                    <div className='btn-container'>
+                        <button className="record-left"
+                                onClick={this.flipLeft}
+                        >
+                            <img className="left-arrow" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTWTSJEUQIoJafBK4YwpfgjYGw_cZZ5hcgsaQ&usqp=CAU" alt="left"></img>
+                        </button>
+                        <button className="expand-btn" onClick={this.expand}>{this.state.expand? 'read less' : 'read more' }</button>
+                        <button className="record-right"
+                                onClick={this.flipRight}
+                        >
+                            <img className="right-arrow" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ7e-AtMj1Iw-3kPrr-fDVXCe6__nfEZ5v5oA&usqp=CAU" alt="right"></img>
+                        </button>
+                    </div>
 
                     <div className='character-records'>
                         {this.state.characters.map((character, i) => {
@@ -120,10 +132,16 @@ export default class CharacterLis extends Component {
                         birth_year={this.state.characters[i].birth_year}
                         gender={this.state.characters[i].gender}
                         id = {i}
+                        hair_color ={this.state.characters[i].hair_color}
+                        eye_color={this.state.characters[i].eye_color}
+                        skin_color={this.state.characters[i].skin_color}
+                        mass={this.state.characters[i].mass}
+                        className={this.state.expand? 'visible' : 'invisible'}
                         expand = {this.expand}
                         />
-                    })}
                         
+                    })}
+                      
                     </div>
                 </div>
                 }
